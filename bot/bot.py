@@ -1,5 +1,7 @@
 import random
-
+import shutil
+import os
+import subprocess
 import telebot
 from telebot import types
 import ZaprosAlleys, ZaprosParki, ZaprosSquares, ZaprosMonuments, ZaprosFacts, ZaprosCulture
@@ -9,6 +11,7 @@ alleys = False
 squares = False
 monuments = False
 cultura = False
+update = False
 # bot.send_photo(716960452, 'AgACAgIAAxkBAAIFw2YpGZ6eBSUSdqBkBBXR0mlsxHcjAALB5zEbFnVISYaqLDe1m017AQADAgADcwADNAQ')
 # bot.send_photo(2117733009, 'AgACAgIAAxkBAAIFw2YpGZ6eBSUSdqBkBBXR0mlsxHcjAALB5zEbFnVISYaqLDe1m017AQADAgADcwADNAQ')
 # bot.send_message(716960452, 'БЛЯТЬ у меня лецензия пайчарма сегодня слетает, все пизда вам ребатки, нт проекту')
@@ -20,6 +23,33 @@ rangSquares = ['Информация!H18:H20', 'Информация!K18:K20', '
 rangMonuments = ['Информация!H26:H28', 'Информация!K26:K28', 'Информация!N26:N28', 'Информация!Q26:Q28', 'Информация!T26:T28', 'Информация!W26:W28', 'Информация!Z26:Z28', 'Информация!AC26:AC28', 'Информация!AF26:AF28']
 rangFacts = ['Информация!G47:G48', 'Информация!H47:H48', 'Информация!I47:I48', 'Информация!J47:J48']
 places = [rangParks, rangAlleys, rangSquares, rangMonuments]
+
+def handle_docs(msg):
+    try:
+        # Создаем папку, если она еще не существует
+        new_folder = 'апдейты'
+        if not os.path.exists(new_folder):
+            os.makedirs(new_folder)
+
+        # Получаем файл
+        file_info = bot.get_file(msg.document.file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
+
+        # Сохраняем файл в текущей директории
+        src_filename = file_info.file_path.split('/')[-1]
+        with open(src_filename, 'wb') as new_file:
+            new_file.write(downloaded_file)
+
+        # Копируем файл в новую папку
+        shutil.copy(src_filename, os.path.join(new_folder, src_filename))
+        bot.reply_to(msg, "Файл успешно скопирован!")
+        filename = 'updater.py'
+        subprocess.run(['python', filename])
+        bot.stop_bot()
+
+    except Exception as e:
+        bot.reply_to(message, e)
+
 def infoparks(msg, rang):
     bot.send_chat_action(msg.chat.id, 'typing')
     ZaprosParki.clear()
@@ -426,4 +456,10 @@ def message(msg):
     else:
         bot.send_message(msg.chat.id, 'Не распознал сообщение')
         start(msg)
+
+@bot.message_handler(content_types=['document'])
+def file(msg):
+    print(msg)
+    handle_docs(msg)
+
 bot.infinity_polling()

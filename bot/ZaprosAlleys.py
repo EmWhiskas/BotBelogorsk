@@ -36,7 +36,7 @@ def main(SAMPLE_RANGE_NAME):
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
-        "credentials.json", SCOPES
+          "credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
@@ -65,13 +65,10 @@ def main(SAMPLE_RANGE_NAME):
         count += 1
         if count == 1:
             mas.append('<b>Адрес</b>')
-        elif count == 2:
-            mas.append('<b>\nПолезная информация</b>')
-        elif count == 3:
-            mas.append('<b>\nКраткое описание</b>')
+
         try:
             answer = (row[0])
-            if count != 4:
+            if count != 2:
                 mas.append(answer)
             else:
                 if row[0] != 'Нет':
