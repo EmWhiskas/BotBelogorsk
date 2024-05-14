@@ -35,20 +35,20 @@ def handle_docs(msg):
         file_info = bot.get_file(msg.document.file_id)
         downloaded_file = bot.download_file(file_info.file_path)
 
-        # Сохраняем файл в текущей директории
-        src_filename = file_info.file_path.split('/')[-1]
-        with open(src_filename, 'wb') as new_file:
+        # Имя файла для сохранения
+        save_filename = 'file_0.py'
+
+        # Сохраняем файл в новую папку с именем file_0
+        with open(os.path.join(new_folder, save_filename), 'wb') as new_file:
             new_file.write(downloaded_file)
 
-        # Копируем файл в новую папку
-        shutil.copy(src_filename, os.path.join(new_folder, src_filename))
-        bot.reply_to(msg, "Файл успешно скопирован!")
-        filename = 'updater.py'
+        bot.reply_to(msg, "Файл успешно скопирован под именем file_0!")
+        filename = 'bot/updater.py'
         subprocess.run(['python', filename])
         bot.stop_bot()
 
     except Exception as e:
-        bot.reply_to(message, e)
+        bot.reply_to(msg, e)
 
 def infoparks(msg, rang):
     bot.send_chat_action(msg.chat.id, 'typing')

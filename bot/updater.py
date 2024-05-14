@@ -29,6 +29,6 @@ shutil.move(source_file_path, target_file_path)
 if os.path.exists(source_file_path):
     os.remove(source_file_path)
 
-filename = 'file_0'
+filename = 'bot.py'
 subprocess.run(['python', filename])
 
