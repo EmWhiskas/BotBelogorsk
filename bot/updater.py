@@ -4,6 +4,7 @@ import shutil
 
 
 os.remove('bot/bot.py')
+
 # Путь к исходной папке
 source_folder = 'апдейты'
 

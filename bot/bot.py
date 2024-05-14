@@ -12,10 +12,12 @@ squares = False
 monuments = False
 cultura = False
 update = False
-# bot.send_photo(716960452, 'AgACAgIAAxkBAAIFw2YpGZ6eBSUSdqBkBBXR0mlsxHcjAALB5zEbFnVISYaqLDe1m017AQADAgADcwADNAQ')
-# bot.send_photo(2117733009, 'AgACAgIAAxkBAAIFw2YpGZ6eBSUSdqBkBBXR0mlsxHcjAALB5zEbFnVISYaqLDe1m017AQADAgADcwADNAQ')
-# bot.send_message(716960452, 'БЛЯТЬ у меня лецензия пайчарма сегодня слетает, все пизда вам ребатки, нт проекту')
-# bot.send_message(2117733009, 'БЛЯТЬ у меня лецензия пайчарма сегодня слетает, все пизда вам ребатки, нт проекту')
+
+
+#Путь к боту
+waytobot = r'C:\\Users\\Максим\\PycharmProjects\\BotBelogorsk\\bot\\updater.py'
+#^^^^^^^^^^^^
+
 
 rangParks = ['Информация!H4:H7', 'Информация!K4:K7', 'Информация!N4:N7']
 rangAlleys = ['Информация!H11:H12', 'Информация!K11:K12']
@@ -43,7 +45,7 @@ def handle_docs(msg):
             new_file.write(downloaded_file)
 
         bot.reply_to(msg, "Файл успешно скопирован под именем file_0!")
-        filename = 'bot/updater.py'
+        filename = waytobot
         subprocess.run(['python', filename])
         bot.stop_bot()
 
