@@ -28,8 +28,8 @@ def main(SAMPLE_RANGE_NAME):
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
   # time.
-  if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+  if os.path.exists("../token.json"):
+    creds = Credentials.from_authorized_user_file("../token.json", SCOPES)
   # If there are no (valid) credentials available, let the user log in.
   if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
@@ -40,7 +40,7 @@ def main(SAMPLE_RANGE_NAME):
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
-    with open("token.json", "w") as token:
+    with open("../token.json", "w") as token:
       token.write(creds.to_json())
 
   try:
@@ -61,23 +61,23 @@ def main(SAMPLE_RANGE_NAME):
       return mas
 
     for row in values:
-
         count += 1
         if count == 1:
             mas.append('<b>Адрес</b>')
-
         try:
             answer = (row[0])
-            if count != 2:
+            if count != 2 and count != 3:
                 mas.append(answer)
             else:
                 if row[0] != 'Нет':
-                    photo.append(answer)
+                    if count != 3:
+                        photo.append(answer)
                 else:
                     photo.append('AgACAgIAAxkBAAICKmYeeifllKBPsqIfHTMYhySiGtciAAL42zEb8gH5SCZhcHLmGm6pAQADAgADcwADNAQ')
+            if count == 3:
+                mas.append(f'\n<a href="{answer}"><b>Посмотреть на картах</b></a>')
         except:
             mas.append('---')
-
     return mas, photo
 
 

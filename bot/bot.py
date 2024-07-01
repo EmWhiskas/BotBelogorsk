@@ -19,10 +19,10 @@ waytobot = r'C:\\Users\\Максим\\PycharmProjects\\BotBelogorsk\\bot\\update
 #^^^^^^^^^^^^
 
 
-rangParks = ['Информация!H4:H7', 'Информация!K4:K7', 'Информация!N4:N7']
-rangAlleys = ['Информация!H11:H12', 'Информация!K11:K12']
-rangSquares = ['Информация!H18:H20', 'Информация!K18:K20', 'Информация!N18:N20', 'Информация!Q18:Q20']
-rangMonuments = ['Информация!H26:H28', 'Информация!K26:K28', 'Информация!N26:N28', 'Информация!Q26:Q28', 'Информация!T26:T28', 'Информация!W26:W28', 'Информация!Z26:Z28', 'Информация!AC26:AC28', 'Информация!AF26:AF28']
+rangParks = ['Информация!H4:H8', 'Информация!K4:K8', 'Информация!N4:N8']
+rangAlleys = ['Информация!H11:H13', 'Информация!K11:K13']
+rangSquares = ['Информация!H18:H21', 'Информация!K18:K21', 'Информация!N18:N21', 'Информация!Q18:Q21']
+rangMonuments = ['Информация!H26:H29', 'Информация!K26:K29', 'Информация!N26:N29', 'Информация!Q26:Q29', 'Информация!T26:T29', 'Информация!W26:W29', 'Информация!Z26:Z29', 'Информация!AC26:AC29', 'Информация!AF26:AF29']
 rangFacts = ['Информация!G47:G48', 'Информация!H47:H48', 'Информация!I47:I48', 'Информация!J47:J48']
 places = [rangParks, rangAlleys, rangSquares, rangMonuments]
 
@@ -80,7 +80,7 @@ def infoparks(msg, rang):
             medias.append(telebot.types.InputMediaPhoto(link))
         # Отправляем группу медиа-объектов как одно сообщение
         bot.send_media_group(chat_id, medias)
-        bot.send_message(chat_id, ans, parse_mode='HTML')
+        bot.send_message(chat_id, ans, parse_mode='HTML', disable_web_page_preview=True)
     bot.send_chat_action(msg.chat.id, 'cancel')
     send_photos_with_text(msg.chat.id, photos, ans)
     keys(msg)
@@ -101,7 +101,7 @@ def infoalleys(msg, rang):
         pass
     photos = photos.split()
     for one in photos:
-        if one == 'Следующее':
+        if one == ' Следующее ':
             photos.remove(one)
         else:
             pass
@@ -114,7 +114,7 @@ def infoalleys(msg, rang):
             medias.append(telebot.types.InputMediaPhoto(link))
         # Отправляем группу медиа-объектов как одно сообщение
         bot.send_media_group(chat_id, medias)
-        bot.send_message(chat_id, ans, parse_mode='HTML')
+        bot.send_message(chat_id, ans, parse_mode='HTML', disable_web_page_preview=True)
     bot.send_chat_action(msg.chat.id, 'cancel')
     send_photos_with_text(msg.chat.id, photos, ans)
     keys(msg)
@@ -148,7 +148,7 @@ def infosquares(msg, rang):
             medias.append(telebot.types.InputMediaPhoto(link))
         # Отправляем группу медиа-объектов как одно сообщение
         bot.send_media_group(chat_id, medias)
-        bot.send_message(chat_id, ans, parse_mode='HTML')
+        bot.send_message(chat_id, ans, parse_mode='HTML', disable_web_page_preview=True)
     bot.send_chat_action(msg.chat.id, 'cancel')
     send_photos_with_text(msg.chat.id, photos, ans)
     keys(msg)
@@ -183,7 +183,7 @@ def infomonuments(msg, rang):
             print(medias)
         # Отправляем группу медиа-объектов как одно сообщение
         bot.send_media_group(chat_id, medias)
-        bot.send_message(chat_id, ans, parse_mode='HTML')
+        bot.send_message(chat_id, ans, parse_mode='HTML', disable_web_page_preview=True)
     bot.send_chat_action(msg.chat.id, 'cancel')
     send_photos_with_text(msg.chat.id, photos, ans)
     keys(msg)
@@ -241,7 +241,7 @@ def infoсultura(msg, rang):
             print(medias)
         # Отправляем группу медиа-объектов как одно сообщение
         bot.send_media_group(chat_id, medias)
-        bot.send_message(chat_id, ans, parse_mode='HTML')
+        bot.send_message(chat_id, ans, parse_mode='HTML', disable_web_page_preview=True)
     bot.send_chat_action(msg.chat.id, 'cancel')
     send_photos_with_text(msg.chat.id, photos, ans)
     keys(msg)
@@ -278,6 +278,24 @@ def keys(msg):
     monuments = False
     bot.send_message(msg.chat.id, 'Рад был помочь', reply_markup=kb)
 
+def back(msg):
+    global parks, alleys, squares, monuments
+    kb = types.ReplyKeyboardMarkup(row_width=2)
+    but1 = types.KeyboardButton('Парки')
+    but2 = types.KeyboardButton('Аллеи')
+    but3 = types.KeyboardButton('Скверы')
+    but4 = types.KeyboardButton('Памятники')
+    but5 = types.KeyboardButton('Хочу окультуриться 👨‍🎓')
+    # but6 = types.KeyboardButton('Где можно прогуляться?🏃‍♀️')
+    but7 = types.KeyboardButton('Выбери за меня, куда пойти🤸‍♀️')
+    but8 = types.KeyboardButton('Интересные факты о городе ⛺')
+    kb.add(but1, but2, but3, but4, but5, but7, but8)
+    parks = False
+    alleys = False
+    squares = False
+    monuments = False
+    bot.send_message(msg.chat.id, 'Как скажешь', reply_markup=kb)
+
 def parki(msg):
     global parks
     parks = True
@@ -285,8 +303,9 @@ def parki(msg):
     but1 = types.KeyboardButton('Городской парк культуры и отдыха')
     but2 = types.KeyboardButton('Парк имени Дзержинского')
     but3 = types.KeyboardButton('Парк Амурсельмаш')
+    but4 = types.KeyboardButton('Назад')
 
-    kb.add(but1, but2, but3)
+    kb.add(but1, but2, but3, but4)
     bot.send_message(msg.chat.id, 'Какой парк тебя интересует', reply_markup=kb)
 
 def alleyskeys(msg):
@@ -295,8 +314,9 @@ def alleyskeys(msg):
     kb = types.ReplyKeyboardMarkup(row_width=1)
     but1 = types.KeyboardButton('Аллея молодежи')
     but2 = types.KeyboardButton('Аллея Героев Славы	')
+    but3 = types.KeyboardButton('Назад')
 
-    kb.add(but1, but2,)
+    kb.add(but1, but2, but3)
     bot.send_message(msg.chat.id, 'Выбирай', reply_markup=kb)
 
 def squareskeys(msg):
@@ -307,7 +327,8 @@ def squareskeys(msg):
     but2 = types.KeyboardButton('Молодежный')
     but3 = types.KeyboardButton('Чеховский')
     but4 = types.KeyboardButton('Александровский')
-    kb.add(but1, but2, but3, but4)
+    but5 = types.KeyboardButton('Назад')
+    kb.add(but1, but2, but3, but4, but5)
     bot.send_message(msg.chat.id, 'О каком сквере поговорим?', reply_markup=kb)
 
 def monumentskeys(msg):
@@ -323,7 +344,8 @@ def monumentskeys(msg):
     but7 = types.KeyboardButton('Памятник «Паровоз-П36»')
     but8 = types.KeyboardButton('Камень «Памяти жертв политических репрессий»')
     but9 = types.KeyboardButton('Памятник Воину-освободителю')
-    kb.add(but1, but2, but4, but5, but6, but7, but8, but9)
+    but10 = types.KeyboardButton('Назад')
+    kb.add(but1, but2, but4, but5, but6, but7, but8, but9, but10)
     bot.send_message(msg.chat.id, 'Куда на этот раз?', reply_markup=kb)
 
 def culturakeys(msg):
@@ -334,7 +356,8 @@ def culturakeys(msg):
     but2 = types.KeyboardButton('Центр культурного развития')
     but3 = types.KeyboardButton('Дом культуры "Амурсельмаш"')
     but4 = types.KeyboardButton('Центральная библиотечная система им. Максима Горького')
-    kb.add(but1, but2, but3, but4)
+    but5 = types.KeyboardButton('Назад')
+    kb.add(but1, but2, but3, but4, but5)
     bot.send_message(msg.chat.id, 'Выбери учреждение культуры, которое ты хочешь посетить', reply_markup=kb)
 
 @bot.message_handler(content_types=['photo'])
@@ -349,84 +372,84 @@ def message(msg):
         parki(msg)
 
     elif msg.text == 'городской парк культуры и отдыха' and parks == True:
-        rang = 'Информация!H4:H7'
+        rang = rangParks[0]
         infoparks(msg, rang)
 
     elif msg.text == 'парк имени дзержинского' and parks == True:
-        rang = 'Информация!K4:K7'
+        rang = rangParks[1]
         infoparks(msg, rang)
 
     elif msg.text == 'парк амурсельмаш' and parks == True:
-        rang = 'Информация!N4:N7'
+        rang = rangParks[2]
         infoparks(msg, rang)
 
     elif 'аллеи' in msg.text:
         alleyskeys(msg)
         
     elif msg.text == 'аллея молодежи' and alleys == True:
-        rang = 'Информация!H11:H12'
+        rang = rangAlleys[0]
         infoalleys(msg, rang)
 
     elif msg.text == 'аллея героев славы' and alleys == True:
-        rang = 'Информация!K11:K12'
+        rang = rangAlleys[1]
         infoalleys(msg, rang)
 
     elif 'скверы' in msg.text:
         squareskeys(msg)
 
     elif msg.text == 'жемчужина' and squares == True:
-        rang = 'Информация!H18:H20'
+        rang = rangSquares[0]
         infosquares(msg, rang)
 
     elif msg.text == 'молодежный' and squares == True:
-        rang = 'Информация!K18:K20'
+        rang = rangSquares[1]
         infosquares(msg, rang)
 
     elif msg.text == 'чеховский' and squares == True:
-        rang = 'Информация!N18:N20'
+        rang = rangSquares[2]
         infosquares(msg, rang)
 
     elif msg.text == 'александровский' and squares == True:
-        rang = 'Информация!Q18:Q20'
+        rang = rangSquares[3]
         infosquares(msg, rang)
 
     elif 'памятники' in msg.text:
         monumentskeys(msg)
 
     elif msg.text == 'памятник "ротану"' and monuments == True:
-        rang = 'Информация!H26:H28'
+        rang = rangMonuments[0]
         infomonuments(msg, rang)
 
     elif msg.text == 'монументы в.и. ленину' and monuments == True:
-        rang = 'Информация!K26:K28'
+        rang = rangMonuments[1]
         infomonuments(msg, rang)
 
     elif msg.text == 'памятник святым супругам петру и февронии.' and monuments == True:
-        rang = 'Информация!N26:N28'
+        rang = rangMonuments[2]
         infomonuments(msg, rang)
 
     elif msg.text == 'памятник вежливому солдату' and monuments == True:
-        rang = 'Информация!Q26:Q28'
+        rang = rangMonuments[3]
         infomonuments(msg, rang)
 
     elif msg.text == 'обелиск «героям-комсомольцам»' and monuments == True:
-        rang = 'Информация!T26:T28'
+        rang = rangMonuments[4]
         infomonuments(msg, rang)
 
     elif msg.text == 'памятник телега переселенцев' and monuments == True:
-        rang = 'Информация!W26:W28'
+        rang = rangMonuments[5]
         infomonuments(msg, rang)
 
     elif msg.text == 'памятник «паровоз-п36»' and monuments == True:
-        rang = 'Информация!Z26:Z28'
+        rang = rangMonuments[6]
         infomonuments(msg, rang)
 
     elif msg.text == 'камень «памяти жертв политических репрессий»' and monuments == True:
-        rang = 'Информация!AC26:AC28'
+        rang = rangMonuments[7]
         infomonuments(msg, rang)
 
     elif msg.text == 'памятник воину-освободителю' and monuments == True:
-        rang = 'Информация!AF26:AF28'
+        rang = rangMonuments[8]
         infomonuments(msg, rang)
 
     elif 'выбери за меня, куда пойти🤸‍♀️' in msg.text:
@@ -440,20 +463,23 @@ def message(msg):
         culturakeys(msg)
 
     elif msg.text == 'детская школа искусств' and cultura == True:
-        rang = 'Информация!H53:H55'
+        rang = 'Информация!H53:H56'
         infoсultura(msg, rang)
 
     elif msg.text == 'центр культурного развития' and cultura == True:
-        rang = 'Информация!I53:I55'
+        rang = 'Информация!I53:I56'
         infoсultura(msg, rang)
 
     elif msg.text == 'дом культуры "амурсельмаш"' and cultura == True:
-        rang = 'Информация!J53:J55'
+        rang = 'Информация!J53:J56'
         infoсultura(msg, rang)
 
     elif msg.text == 'центральная библиотечная система им. максима горького' and cultura == True:
-        rang = 'Информация!K53:K55'
+        rang = 'Информация!K53:K56'
         infoсultura(msg, rang)
+
+    elif msg.text == 'назад':
+        back(msg)
 
     else:
         bot.send_message(msg.chat.id, 'Не распознал сообщение')
